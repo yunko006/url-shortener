@@ -1,0 +1,7 @@
+<p> Wesh wesh </p>
+
+<form action="{% url 'shorturl:choose_url' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name='submit'>Créer mon lien</button>
+</form>
