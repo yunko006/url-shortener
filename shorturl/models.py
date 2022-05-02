@@ -5,7 +5,7 @@ from django.db import models
 
 class URL(models.Model):
     url_long = models.CharField(max_length=500)
-    url_custom = models.CharField(max_length=20)
+    url_custom = models.CharField(max_length=20, unique=True)
 
     def __str__(self) -> str:
         return self.url_custom
