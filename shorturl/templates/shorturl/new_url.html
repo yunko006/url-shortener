@@ -1,0 +1,5 @@
+<p> Le nouveau lien est : {{request.get_host}}/{{ new_url.url_custom }} </p>
+
+<a href="{% url 'shorturl:redirect_url' new_url.url_custom %}">
+    <button>  Mon lien</button>
+</a>
