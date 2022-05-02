@@ -5,16 +5,15 @@ et un autre button pour choisir le nom du lien
 
 <p> Home </p>
 
-<button>
-    Générer un lien aléatoire
-</button>
-
-<button>
-    Créer mon lien
-</button>
-
 {% comment %} <form action="{% url 'shorturl:url_shortener' %}">
     <input type="submit" value="Générer un lien aléatoire" />
 </form> {% endcomment %}
 
-<a href="{% url 'shorturl:choose_url' %}">Créer mon lien</a>
+
+<a href="{% url 'shorturl:hash_url' %}">
+    <button>Générer un lien aléatoire</button>
+</a>
+
+<a href="{% url 'shorturl:choose_url' %}">
+    <button>Créer mon lien</button>
+</a>
