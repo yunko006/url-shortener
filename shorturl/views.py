@@ -7,9 +7,9 @@ from .forms import *
     # moi je vais hash le lien : url_a_hash donc url_hashed = exemple
     # quand je vais écrire 127.0.0.1:8000/exemple je vais avoir un redirect vers le url_a_hash 
     # 2 trucs a faire : 
-    # 1-a la fonction de hash
-    # 1-b ou bien faire la fonction qui permet de créer soit meme un nom : check si le nom existe pas
-    # / 2- le redirect a partir de mon site
+    # [ ]1-a la fonction de hash
+    # [X]1-b ou bien faire la fonction qui permet de créer soit meme un nom : check si le nom existe pas
+    # [X]/ 2- le redirect a partir de mon site
 
 # redirect un url de facon définitive 
 
@@ -42,7 +42,21 @@ def choose_url(request):
 
 
 def hash_url(request):
-    pass
+    if request.method != 'POST':
+        form = HashURLNameForm()
+
+    else:
+        form = HashURLNameForm(data=request.POST)
+        if form.is_valid():
+            new_url = form.save(commit=False)
+            # TODO :hash l'url long avant de save 
+            # save le tout
+            new_url.save()
+            context= {"new_url": new_url}
+            return render(request, 'shorturl/new_url.html', context)
+ 
+    context= {"form": form}
+    return render(request, 'shorturl/hash_url.html', context)
 
 
 def redirect_url(request, short):
