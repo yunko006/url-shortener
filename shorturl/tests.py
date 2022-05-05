@@ -87,3 +87,24 @@ class HashUrlTests(TestCase):
     #     form_data = {'url_long': 'longurlpourfaireletest', 'url_custom': 'custom',}
     #     response = self.client.post('/hash/', data=form_data)
     #     self.assertEqual(URL.objects.count(), 1)
+
+
+# redirect_url view
+class RedirectUrlTests(TestCase):
+    """
+    Test si l'objet existe : si oui et si non
+    Test que le redirect marche bien, response 200
+    Test le template
+    """
+
+    def test_object_exist(self):
+        pass
+
+    def test_redirect_code(self):
+        pass
+
+    def test_redirect_template(self):
+        pass
+
+    def test_redirect_is_working(self):
+        pass
