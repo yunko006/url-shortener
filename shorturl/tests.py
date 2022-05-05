@@ -43,3 +43,28 @@ class HomePageTests(SimpleTestCase):
     # def test_homepage_url_resolves_homepageview(self):
     #     view = resolve('/')
     #     self.assertEqual(view.func.__name__,views.home(request).resolver_match)
+
+
+# choose_url view
+class ChooseUrlNameTests(TestCase):
+        
+    def test_valid_form(self):
+        form_data = {'url_long': 'longurlpourfaireletest', 'url_custom': 'custom',}
+        form = ChooseURLNameForm(data=form_data)
+        self.assertTrue(form.is_valid())
+    
+    # def test_choose_url_name(self):
+    #     form = ChooseURLNameForm(data={"url_long": "unurlvraimenttreslong", "url_custom": "unurlcustom"})
+    #     self.assertEqual(form.errors["#"])
+
+    # test a post data
+    def test_post_choose_url_name_form(self):
+        form_data = {'url_long': 'longurlpourfaireletest', 'url_custom': 'custom'}
+        response = self.client.post('/choose/', data=form_data)
+        self.assertEqual(URL.objects.count(), 1)
+
+    # test choose_url template
+    def test_choose_url_template(self):
+        url = reverse('shorturl:choose_url')
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'shorturl/choose_url_name.html')
