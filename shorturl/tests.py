@@ -68,3 +68,22 @@ class ChooseUrlNameTests(TestCase):
         url = reverse('shorturl:choose_url')
         response = self.client.get(url)
         self.assertTemplateUsed(response, 'shorturl/choose_url_name.html')
+
+
+# hash_url view
+class HashUrlTests(TestCase):
+
+    def test_hash_url_template(self):
+        url = reverse('shorturl:hash_url')
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'shorturl/hash_url.html')
+
+    def test_valid_form(self):
+        form_data = {'url_long': 'longurlpourfaireletest', 'url_custom': 'custom',}
+        form = HashURLNameForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    # def test_post_hash_url_form(self):
+    #     form_data = {'url_long': 'longurlpourfaireletest', 'url_custom': 'custom',}
+    #     response = self.client.post('/hash/', data=form_data)
+    #     self.assertEqual(URL.objects.count(), 1)
