@@ -17,3 +17,29 @@ class URLTest(TestCase):
         u = self.create_url()
         self.assertTrue(isinstance(u, URL))
         self.assertEqual(u.__str__(), u.url_custom)
+
+
+# views test
+class HomePageTests(SimpleTestCase):
+
+    """check that the HTTP status code for the homepage equals 200"""
+    def setUp(self) -> None:
+        url = reverse('shorturl:home')
+        self.response = self.client.get(url)
+
+    def test_homepage_stats_code(self):
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_homepage_template(self):
+        self.assertTemplateUsed(self.response, 'shorturl/home.html')
+
+    def test_homepage_contaons_correct_html(self):
+        self.assertContains(self.response, 'Home')
+
+    def test_homepage_does_not_contain_incorrect_html(self):
+        self.assertNotContains(self.response, 'Acceuil')
+
+    # need fix
+    # def test_homepage_url_resolves_homepageview(self):
+    #     view = resolve('/')
+    #     self.assertEqual(view.func.__name__,views.home(request).resolver_match)
