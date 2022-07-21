@@ -30,18 +30,38 @@ def choose_url(request):
 
     else:
         form = ChooseURLNameForm(data=request.POST)
+        # si il existe pas on crée
         if form.is_valid():
             new_url = form.save(commit=False)
-            # a rajouter : check si le nom n'est pas déja prit
             new_url.save()
             context= {"new_url": new_url}
             return render(request, 'shorturl/new_url.html', context)
+
+        # si url long existe deja return l'url short qu'il y a dans la base de donnée
+        else:
+            url_used = form.data.get('url_long')
+            # met dans la session le long url qui existe deja dans la base de donné.
+            request.session['long_url_existe_deja'] = url_used
+
+            return redirect('shorturl:retrieve')
  
     context= {"form": form}
     return render(request, 'shorturl/choose_url_name.html', context)
 
 
-def hash_url(request):
+def retrieve_url(request):
+    url_used = request.session['long_url_existe_deja']
+    custom_already_created = URL.objects.get(url_long=url_used)
+            
+    context = {
+        "custom_already_created": custom_already_created, 
+        "url_used": url_used
+    }
+
+    return render(request, 'shorturl/retrieve_url.html', context)
+
+
+def generate_url(request):
     if request.method != 'POST':
         form = HashURLNameForm()
 
@@ -56,7 +76,7 @@ def hash_url(request):
             return render(request, 'shorturl/new_url.html', context)
  
     context= {"form": form}
-    return render(request, 'shorturl/hash_url.html', context)
+    return render(request, 'shorturl/generate_url.html', context)
 
 
 def redirect_url(request, short):
