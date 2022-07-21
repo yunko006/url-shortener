@@ -9,11 +9,14 @@ et un autre button pour choisir le nom du lien
     <input type="submit" value="Générer un lien aléatoire" />
 </form> {% endcomment %}
 
-
-<a href="{% url 'shorturl:hash_url' %}">
+<div>
+<a href="{% url 'shorturl:generate_url' %}">
     <button>Générer un lien aléatoire</button>
 </a>
+</div>
 
+<div>
 <a href="{% url 'shorturl:choose_url' %}">
     <button>Créer mon lien</button>
 </a>
+</div>
