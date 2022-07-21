@@ -1,0 +1,7 @@
+<p> Vous avez deja créer un short url pour ce lien : {{ url_used }} </p
+
+<p> Voici votre lien : {{request.get_host}}/{{ custom_already_created }} </p>
+
+<a href="{% url 'shorturl:redirect_url' custom_already_created %}">
+    <button>  Mon lien</button>
+</a>

@@ -9,7 +9,9 @@ urlpatterns = [
     # choisir un nom
     path('choose/', views.choose_url, name='choose_url'),
     # hash l'url
-    path('hash/', views.hash_url, name='hash_url'),
+    path('generate/', views.generate_url, name='generate_url'),
+    # si url deja dans la base de donnée 
+    path('retrieve/', views.retrieve_url, name='retrieve'),
     # redirect vers le "vrai" lien
     path('<str:short>/', views.redirect_url, name='redirect_url'),
 ]
