@@ -69,11 +69,20 @@ def generate_url(request):
         form = HashURLNameForm(data=request.POST)
         if form.is_valid():
             new_url = form.save(commit=False)
-            # TODO :hash l'url long avant de save 
-            # save le tout
+            # call la function create_short_url 
+            generate_url = new_url.create_short_url()
+            # asigne la variable au model 
+            new_url.url_custom = generate_url
+            # save dans le model
             new_url.save()
             context= {"new_url": new_url}
             return render(request, 'shorturl/new_url.html', context)
+        else:
+            url_used = form.data.get('url_long')
+            # met dans la session le long url qui existe deja dans la base de donné.
+            request.session['long_url_existe_deja'] = url_used
+
+            return redirect('shorturl:retrieve')
  
     context= {"form": form}
     return render(request, 'shorturl/generate_url.html', context)
