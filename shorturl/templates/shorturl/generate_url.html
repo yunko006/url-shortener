@@ -1,6 +1,6 @@
 <p> Générer un nom aléatoire : </p>
 
-<form action="{% url 'shorturl:hash_url' %}" method="post">
+<form action="{% url 'shorturl:generate_url' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button name='submit'>Générer un lien</button>
