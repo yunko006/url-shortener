@@ -7,9 +7,11 @@ from .forms import *
     # moi je vais hash le lien : url_a_hash donc url_hashed = exemple
     # quand je vais écrire 127.0.0.1:8000/exemple je vais avoir un redirect vers le url_a_hash 
     # 2 trucs a faire : 
-    # [ ]1-a la fonction de hash
+    # [X]1-a la fonction de hash
     # [X]1-b ou bien faire la fonction qui permet de créer soit meme un nom : check si le nom existe pas
     # [X]/ 2- le redirect a partir de mon site
+    # [ ] html tableau pour voir tous les liens que j'ai crée
+    # [ ] html pour delete un lien / edit
 
 # redirect un url de facon définitive 
 
@@ -39,26 +41,24 @@ def choose_url(request):
 
         # si url long existe deja return l'url short qu'il y a dans la base de donnée
         else:
-            url_used = form.data.get('url_long')
-            # met dans la session le long url qui existe deja dans la base de donné.
-            request.session['long_url_existe_deja'] = url_used
+            # try block pour voir si l'url existe deja 
+            try:
+                url_used = form.data.get('url_long')
+                custom_already_created = URL.objects.get(url_long=url_used)
 
-            return redirect('shorturl:retrieve')
- 
+                context = {
+                    "custom_already_created": custom_already_created, 
+                    "url_used": url_used
+                }
+
+                return render(request, 'shorturl/retrieve_url.html', context)
+            # url n'existe pas dans la db
+            except URL.DoesNotExist:
+                pass
+
+
     context= {"form": form}
     return render(request, 'shorturl/choose_url_name.html', context)
-
-
-def retrieve_url(request):
-    url_used = request.session['long_url_existe_deja']
-    custom_already_created = URL.objects.get(url_long=url_used)
-            
-    context = {
-        "custom_already_created": custom_already_created, 
-        "url_used": url_used
-    }
-
-    return render(request, 'shorturl/retrieve_url.html', context)
 
 
 def generate_url(request):
@@ -77,12 +77,19 @@ def generate_url(request):
             new_url.save()
             context= {"new_url": new_url}
             return render(request, 'shorturl/new_url.html', context)
-        else:
-            url_used = form.data.get('url_long')
-            # met dans la session le long url qui existe deja dans la base de donné.
-            request.session['long_url_existe_deja'] = url_used
 
-            return redirect('shorturl:retrieve')
+        else:
+            # refractor car double utilisation de cette partie
+            url_used = form.data.get('url_long')
+            custom_already_created = URL.objects.get(url_long=url_used)
+
+            context = {
+                "custom_already_created": custom_already_created, 
+                "url_used": url_used
+            }
+
+            return render(request, 'shorturl/retrieve_url.html', context)
+            
  
     context= {"form": form}
     return render(request, 'shorturl/generate_url.html', context)
@@ -93,3 +100,11 @@ def redirect_url(request, short):
     if get_object_or_404(URL, url_custom=short):
         long = URL.objects.get(url_custom=short)
         return redirect(long.url_long)
+
+
+def see_url(request):
+    url_created = URL.objects.all()
+
+    context = {"url_created": url_created}
+
+    return render(request, 'shorturl/all_url.html', context)
