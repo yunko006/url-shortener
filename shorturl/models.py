@@ -1,6 +1,6 @@
 import secrets
 from string import ascii_uppercase, ascii_lowercase, digits
-from xmlrpc.client import TRANSPORT_ERROR
+
 from django.db import models
 
 # Create your models here.
