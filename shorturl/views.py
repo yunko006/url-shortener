@@ -18,6 +18,7 @@ from .forms import *
 def home(request):
 
     return render(request, 'shorturl/home.html')
+    # return redirect('shorturl:generate_url')
 
 
 def choose_url(request):
@@ -102,7 +103,7 @@ def redirect_url(request, short):
         return redirect(long.url_long)
 
 
-def see_url(request):
+def saved_url(request):
     url_created = URL.objects.all()
 
     context = {"url_created": url_created}

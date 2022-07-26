@@ -10,7 +10,9 @@ urlpatterns = [
     path('choose/', views.choose_url, name='choose_url'),
     # hash l'url
     path('generate/', views.generate_url, name='generate_url'),
+    # stp marche
+    path('saved/', views.saved_url, name='saved_url'),
     # redirect vers le "vrai" lien
     path('<str:short>/', views.redirect_url, name='redirect_url'),
-    path('my_url/', views.see_url, name='see_url'),
+    
 ]
