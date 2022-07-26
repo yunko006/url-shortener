@@ -1,5 +1,4 @@
 from urllib import request
-from django.db import IntegrityError
 from django.test import SimpleTestCase, TestCase
 
 from shorturl import views
@@ -40,11 +39,6 @@ class HomePageTests(SimpleTestCase):
     def test_homepage_does_not_contain_incorrect_html(self):
         self.assertNotContains(self.response, 'Acceuil')
 
-    # need fix
-    # def test_homepage_url_resolves_homepageview(self):
-    #     view = resolve('/')
-    #     self.assertEqual(view.func.__name__,views.home(request).resolver_match)
-
 
 # choose_url view
 class ChooseUrlNameTests(TestCase):
@@ -79,47 +73,8 @@ class ChooseUrlNameTests(TestCase):
     #     self.assertRaises(IntegrityError, test, test2)
 
 
-# retrieve_url view
-class RetrieveUrlTests(TestCase):
-    # def setUp(self) -> None:
-    #     # URL.objects.create(url_long = 'unurlvraiimentvraimentreslong')
-    #     session = self.client.session
-    #     session['long_url_existe_deja'] = 'unurlvraiimentvraimentreslong'
-    #     session.save()
-
-    # def test_hash_url_template(self):
-    #     url = reverse('shorturl:retrieve_url')
-    #     response = self.client.get(url)
-    #     self.assertTemplateUsed(response, 'shorturl/retrieve_url.html')
-
-    # def setUp(self) -> None:
-    #     session = self.client.session
-    #     session['long_url_existe_deja'] = 'unurlvraiimentvraimentreslong'
-    #     session.save()
-    #     url = reverse('shorturl:retrieve_url')
-    #     self.response = self.client.get(url)
-        
-
-    # def test_retrieve_page_stats_code(self):
-    #     self.assertEqual(self.response.status_code, 200)
-
-    # def test_retrieve_page_template(self):
-    #     self.assertTemplateUsed(self.response, 'shorturl/retrieve_url.html')
-
-    # def test_homepage_contaons_correct_html(self):
-    #     self.assertContains(self.response, 'Voici')
-
-    # def test_homepage_does_not_contain_incorrect_html(self):
-    #     self.assertNotContains(self.response, 'Hello')
-    pass
-
-# hash_url view
+# generate_url view
 class GenerateUrlTests(TestCase):
-    def setUp(self) -> None:
-        # URL.objects.create(url_long = 'unurlvraiimentvraimentreslong')
-        session = self.client.session
-        session['long_url_existe_deja'] = 'test'
-        session.save()
 
     def test_hash_url_template(self):
         url = reverse('shorturl:generate_url')
@@ -144,14 +99,25 @@ class RedirectUrlTests(TestCase):
     Test le template
     """
     def setUp(self) -> None:
-        URL.objects.create(url_long = 'unurlvraiimentvraimentreslong',url_custom = 'custom')
+        URL.objects.create(url_long = 'https://www.twitch.tv/sardoche',url_custom = 'custom')
 
     def test_object_exist(self):
         # url = URL.objects.get(url_long = 'unurlvraiimentvraimentreslong')
         self.assertEqual(URL.objects.count(), 1)
 
-    def test_redirect_code(self):
-        pass
-
     def test_redirect_is_working(self):
-        pass
+        url = reverse('shorturl:redirect_url', kwargs={'short': 'custom'})
+        response = self.client.get(url)
+        self.assertRedirects(response, 'https://www.twitch.tv/sardoche', status_code=302, target_status_code=302, fetch_redirect_response=False)
+
+
+class SavedUrlTests(TestCase):
+    def test_saved_url_template(self):
+        url = reverse('shorturl:saved_url')
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'shorturl/all_url.html')
+
+    def test_savedurl_contains_correct_html(self):
+        url = reverse('shorturl:saved_url')
+        response = self.client.get(url)
+        self.assertContains(response, 'URL sauvegardé')
