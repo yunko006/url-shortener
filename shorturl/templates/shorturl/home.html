@@ -1,22 +1,64 @@
-{% comment %} 
-2 buttons un pour générer aléatoirement un nom 
-et un autre button pour choisir le nom du lien
-{% endcomment %}
+{% extends 'shorturl/base.html' %}
 
-<p> Home </p>
+{% block title %} Acceuil {% endblock %}
 
-{% comment %} <form action="{% url 'shorturl:url_shortener' %}">
-    <input type="submit" value="Générer un lien aléatoire" />
-</form> {% endcomment %}
+{% block content%}
 
-<div>
-<a href="{% url 'shorturl:generate_url' %}">
-    <button>Générer un lien aléatoire</button>
-</a>
-</div>
+    <section class="section has-text-centered">
+        <h1 class="title">Bienvenue sur NOM</h1>
+        <h2 class="subtitle">
+        Une application simple pour <strong>réduire</strong> vos urls, pas besoin de créer un compte.
+        </h2>
+    </section>
 
-<div>
-<a href="{% url 'shorturl:choose_url' %}">
-    <button>Créer mon lien</button>
-</a>
-</div>
+    
+
+    <div class="columns is-gapless mt-5">
+        <div class="column is-half">
+            <section class="hero is-halfheight is-primary">
+                <div class="hero-body">
+                    <div class="container has-text-centered">
+                        <div class="columns">
+                            <div class="column">
+                                <p class='title has-text-link'>
+                                    Raccourci tes liens avec un nom aléatoire.
+                                </p>
+                              <div class="columns is-mobile">
+                                <div class="column">
+                                    <a href="{% url 'shorturl:generate_url' %}">
+                                        <button class='button is-rounded mt-2'>Je génére !</button>
+                                    </a>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </section>
+        </div>
+        <div class="column is-half">
+            <section class="hero is-halfheight is-link">
+                <div class="hero-body">
+                    <div class="container has-text-centered">
+                        <div class="columns">
+                            <div class="column">
+                                <p class='title has-text-primary'>
+                                    Raccourci tes liens avec un nom que <strong>TU</strong> choisis.
+                                </p>
+                              <div class="columns is-mobile">
+                                <div class="column">
+                                    <a href="{% url 'shorturl:choose_url' %}">
+                                        <button class='button is-rounded mt-2'>Je choisis !</button>
+                                    </a>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </section>
+
+        </div>
+      </div>
+
+{% endblock%}
