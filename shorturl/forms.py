@@ -12,7 +12,7 @@ class ChooseURLNameForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={
                 "placeholder": "Entrez un url...",
-                "class": "input is-medium is-rounded",
+                "class": "input is-normal is-rounded",
             }
         ),
         label="",
@@ -22,7 +22,7 @@ class ChooseURLNameForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={
                 "placeholder": "Entrez un nom...",
-                "class": "input is-medium is-rounded",
+                "class": "input is-normal is-rounded mt-2",
             }
         ),
         label="",
