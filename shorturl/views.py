@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
@@ -12,6 +13,7 @@ from .forms import *
     # [X]/ 2- le redirect a partir de mon site
     # [ ] html tableau pour voir tous les liens que j'ai crée
     # [ ] html pour delete un lien / edit
+    # [ ] https://docs.djangoproject.com/en/4.0/topics/http/sessions/ url saved dans les cookies
 
 # redirect un url de facon définitive 
 
@@ -109,3 +111,17 @@ def saved_url(request):
     context = {"url_created": url_created}
 
     return render(request, 'shorturl/all_url.html', context)
+
+
+def delete_url(request, url_id):
+    url = URL.objects.get(id=url_id)
+
+    if request.method == 'POST':
+        url.delete()
+        return redirect('shorturl:saved_url')
+
+    # context = {
+    #     "url": url
+    # }
+
+    return HttpResponse("OK")

@@ -12,7 +12,11 @@ urlpatterns = [
     path('generate/', views.generate_url, name='generate_url'),
     # stp marche
     path('saved/', views.saved_url, name='saved_url'),
+    # delete a saved url
+    path('delete/<int:url_id>', views.delete_url, name='delete_url'),
     # redirect vers le "vrai" lien
     path('<str:short>/', views.redirect_url, name='redirect_url'),
+    
+
     
 ]
