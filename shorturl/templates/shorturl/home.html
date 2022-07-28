@@ -15,18 +15,18 @@
 
     <div class="columns is-gapless mt-5">
         <div class="column is-half">
-            <section class="hero is-halfheight is-primary">
+            <section class="hero is-halfheight is-link">
                 <div class="hero-body">
                     <div class="container has-text-centered">
                         <div class="columns">
                             <div class="column">
-                                <p class='title has-text-link'>
+                                <p class='title has-text-white'>
                                     Raccourci tes liens avec un nom aléatoire.
                                 </p>
                               <div class="columns is-mobile">
                                 <div class="column">
                                     <a href="{% url 'shorturl:generate_url' %}">
-                                        <button class='button is-rounded mt-2'>Je génére !</button>
+                                        <button class='button is-rounded is-white is-outlined mt-2'>Je génére !</button>
                                     </a>
                                 </div>
                               </div>
@@ -37,18 +37,18 @@
               </section>
         </div>
         <div class="column is-half">
-            <section class="hero is-halfheight is-link">
+            <section class="hero is-halfheight is-success">
                 <div class="hero-body">
                     <div class="container has-text-centered">
                         <div class="columns">
                             <div class="column">
-                                <p class='title has-text-primary'>
+                                <p class='title has-text-black'>
                                     Raccourci tes liens avec un nom que <strong>TU</strong> choisis.
                                 </p>
                               <div class="columns is-mobile">
                                 <div class="column">
                                     <a href="{% url 'shorturl:choose_url' %}">
-                                        <button class='button is-rounded mt-2'>Je choisis !</button>
+                                        <button class='button is-rounded is-black is-outlined mt-2'>Je choisis !</button>
                                     </a>
                                 </div>
                               </div>

@@ -1,3 +1,40 @@
+{% extends 'shorturl/base.html' %}
+
+{% block title %} Choisir {% endblock %}
+
+{% block content%}
+
+  <section class="hero is-medium is-success mt-5">
+    <div class="hero-body has-text-centered">
+      <p class="title has-text-black">
+        Créer ton lien
+      </p>
+      <p class="subtitle has-text-black">
+        Créer le nom d'url que tu souhaites !
+      </p>
+      <div class="container">
+        <div class="columns">
+          <div class="column"></div>
+          <div class="column is-two-thirds">
+            <form class="mt-5" action="{% url 'shorturl:choose_url' %}" method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button class="button is-rounded mt-2" name='submit'>Créer mon lien</button>
+            </form>
+          </div>
+          <div class="column"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock%}
+
+
+{% comment %} {% extends 'shorturl/base.html' %}
+
+{% block content%}
+
 <p> Créer son propre lien </p>
 
 <form action="{% url 'shorturl:choose_url' %}" method="post">
@@ -5,3 +42,5 @@
     {{ form.as_p }}
     <button name='submit'>Créer mon lien</button>
 </form>
+
+{% endblock content %} {% endcomment %}

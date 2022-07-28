@@ -1,5 +1,28 @@
-<p> Le nouveau lien est : {{request.get_host}}/{{ new_url.url_custom }} </p>
+{% extends 'shorturl/base.html' %}
 
-<a href="{% url 'shorturl:redirect_url' new_url.url_custom %}">
-    <button>  Mon lien</button>
-</a>
+{% block title %} Nouveau {% endblock %}
+
+{% block content%}
+
+<section class="section has-text-centered">
+    <h1 class="subtitle">Voici votre shorturl :</h1>
+    <h2 class="title mt-5">
+        {{request.get_host}}/{{ new_url.url_custom }}
+    </h2>
+</section>
+<hr>
+<nav class="level mt-5">
+    <p class="level-item has-text-centered is-boxed">
+      <a class="link is-info" href="{% url 'shorturl:redirect_url' new_url.url_custom %}">Copier</a>
+    </p>
+    <p class="level-item has-text-centered">
+      <a class="link is-info" href="{% url 'shorturl:generate_url' %}">Générer</a>
+    </p>
+    <p class="level-item has-text-centered">
+      <a class="link is-info" href="{% url 'shorturl:choose_url' %}">Choisir</a>
+    </p>
+    <p class="level-item has-text-centered">
+      <a class="link is-info" href="{% url 'shorturl:saved_url' %}">Voir mes liens</a>
+    </p>
+</nav>
+{% endblock content %}
