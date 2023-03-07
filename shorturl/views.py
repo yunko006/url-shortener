@@ -18,8 +18,11 @@ from .forms import *
 # redirect un url de facon définitive 
 
 def home(request):
+    url_created = URL.objects.all()
 
-    return render(request, 'shorturl/home.html')
+    context = {"url_created": url_created}
+
+    return render(request, 'shorturl/ui.html', context)
     # return redirect('shorturl:generate_url')
 
 
@@ -97,6 +100,15 @@ def generate_url(request):
     context= {"form": form}
     return render(request, 'shorturl/generate_url.html', context)
 
+
+def get_one_url(request, url_id):
+    url = URL.objects.get(id=url_id)
+
+    context = {
+        'url': url
+    }
+
+    return render(request, 'shorturl/description.html', context )
 
 def redirect_url(request, short):
     # check si short_url est dans la base de donnée si oui alors on redirect vers son url long else 404
