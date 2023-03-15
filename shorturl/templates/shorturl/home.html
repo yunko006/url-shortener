@@ -1,64 +1,47 @@
 {% extends 'shorturl/base.html' %}
 
-{% block title %} Acceuil {% endblock %}
+{% block sidebar %}
+    {% include 'shorturl/_sidebar.html' %}
+{% endblock sidebar %}
 
-{% block content%}
+{% block content %}
+<div class="w-full pt-10 px-4 sm:px-6 md:px-8 lg:pl-72">
+    <div class="grid grid-cols-3">
+        <div class="flex flex-row">
+            <h1 class='text-xl text-white'>Liens créés</h1>
+        </div>
+        <div class="col-span-2 justify-center px-4">
+            <h1 class='text-xl text-white'>Desciption</h1>
+        </div>
+    </div>
 
-    <section class="section has-text-centered">
-        <h1 class="title">Bienvenue sur NOM</h1>
-        <h2 class="subtitle">
-        Une application simple pour <strong>réduire</strong> vos urls, pas besoin de créer un compte.
-        </h2>
-    </section>
+    {% comment %} cards layout {% endcomment %}
+    <div class="grid grid-cols-3 gap-4 divide-x">
 
+        {% comment %} partie gauche {% endcomment %}
+        <div class="grid grid-flow-row auto-rows-max gap-4 px-2 py-6 h-screen overflow-y-auto">
+            {% for lien in url_created %}
+            <a href='#' hx-get="{% url 'shorturl:get_one_url' lien.id%}" hx-target="#result" class="group block max-w-xs  rounded-lg p-6  ring-1 ring-slate-900/5 shadow-lg space-y-3 bg-gray-800 hover:bg-slate-900 hover:ring-gray-400">
+              <h3 class="text-white group-hover:text-white text-sm font-semibold">{{ lien.name }}</h3>
+              <p class="text-white group-hover:text-white text-sm">{{request.get_host}}/{{lien.url_custom}}</p>
+              
+            </a>
+            {% endfor %}
+        </div>
+        
     
-
-    <div class="columns is-gapless mt-5">
-        <div class="column is-half">
-            <section class="hero is-halfheight is-link">
-                <div class="hero-body">
-                    <div class="container has-text-centered">
-                        <div class="columns">
-                            <div class="column">
-                                <p class='title has-text-white'>
-                                    Raccourci tes liens avec un nom aléatoire.
-                                </p>
-                              <div class="columns is-mobile">
-                                <div class="column">
-                                    <a href="{% url 'shorturl:generate_url' %}">
-                                        <button class='button is-rounded is-white is-outlined mt-2'>Je génére !</button>
-                                    </a>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
+        {% comment %} partie droite {% endcomment %}
+        <div class="col-span-2 justify-center px-4">
+            <div class="grid grid-rows-2 grid-flow-col gap-4">
+                <div id="result" class="py-6">
+                    <h2 class="text-xl text-white">placeholder</h2>
+                    
+                    
                 </div>
-              </section>
+            </div>
         </div>
-        <div class="column is-half">
-            <section class="hero is-halfheight is-success">
-                <div class="hero-body">
-                    <div class="container has-text-centered">
-                        <div class="columns">
-                            <div class="column">
-                                <p class='title has-text-black'>
-                                    Raccourci tes liens avec un nom que <strong>TU</strong> choisis.
-                                </p>
-                              <div class="columns is-mobile">
-                                <div class="column">
-                                    <a href="{% url 'shorturl:choose_url' %}">
-                                        <button class='button is-rounded is-black is-outlined mt-2'>Je choisis !</button>
-                                    </a>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-              </section>
+    {% comment %} fin layout cards {% endcomment %}
+    </div>
 
-        </div>
-      </div>
-
-{% endblock%}
+</div>
+{% endblock content %}

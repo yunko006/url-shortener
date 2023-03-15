@@ -1,0 +1,104 @@
+<div class="col-span-2 justify-center px-4">
+    <div class="grid grid-rows-2 grid-flow-col">
+        <div>
+            <div class="rounded-lg bg-gray-800 p-6 shadow-lg">
+                <div class="flex justify-between"> 
+                    <div class='flex justify-start'>
+                        <h5 class="mb-2 text-xl font-medium justify-start leading-tight text-white">Nom : {{ url.name }}</h5>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        {% comment %} edit {% endcomment %}
+ 
+                        {% comment %} <a href="#" class="text-white justify-end text-sm font-semibold bg-blue-500 text-white font-bold py-2 px-4 rounded-lg">edit</a> {% endcomment %}
+                        <button class="bg-gray-400 text-white active:bg-pink-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" hx-get="{% url 'shorturl:edit_name' url.id %}" hx-target="#edit" type="button" onclick="toggleModal('modal-edit')">
+                            Edit
+                          </button>
+                          <div class="hidden overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center" id="modal-edit">
+                            <div class="relative w-auto my-6 mx-auto max-w-sm">
+                              <!--content-->
+                              <div class="border rounded-lg shadow-lg relative flex flex-col w-full bg-slate-900 border-gray-400 outline-none focus:outline-none">
+                                <div id='edit' class="relative p-6 flex-auto">
+                                {% comment %} truc {% endcomment %}
+                                  
+                                  {% comment %} <p class="my-4 text-white text-lg leading-relaxed">
+                                    Voulez-vous vraiment supprimer ce lien ?
+                                  </p> {% endcomment %}
+                                </div>
+                                <!--footer-->
+                                <div class="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
+                                  <button class="text-gray-400 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" onclick="toggleModal('modal-edit')">
+                                    Annuler
+                                  </button>
+                                
+                                <button type="submit" form="form-modal-edit" class='text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>Confirmer</button>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="hidden opacity-25 fixed inset-0 z-40 bg-black" id="modal-edit-backdrop"></div>
+
+                        {% comment %} delete {% endcomment %}
+
+                        <button class="bg-pink-500 text-white active:bg-pink-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" onclick="toggleModal('modal-delete')">
+                            Supprimer
+                          </button>
+                          <div class="hidden overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center" id="modal-delete">
+                            <div class="relative w-auto my-6 mx-auto max-w-sm">
+                              <!--content-->
+                              <div class="border rounded-lg shadow-lg relative flex flex-col w-full bg-slate-900 border-gray-400 outline-none focus:outline-none">
+                                <div class="relative p-6 flex-auto">
+                                  <p class="my-4 text-white text-lg leading-relaxed">
+                                    Voulez-vous vraiment supprimer ce lien ?
+                                  </p>
+                                </div>
+                                <!--footer-->
+                                <div class="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
+                                  <button class="text-gray-400 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" onclick="toggleModal('modal-delete')">
+                                    Annuler
+                                  </button>
+                                  <form action="{% url 'shorturl:delete_url' url.id %}" method="post">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <button class='text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>supprimer</button>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="hidden opacity-25 fixed inset-0 z-40 bg-black" id="modal-delete-backdrop"></div>
+                          
+                        
+                    </div>
+                </div>
+                <p class="mb-4 text-base text-white">
+                    Date de création : {{ url.date_created }}
+                </p>
+            </div>
+        </div>
+        {% comment %} 2eme card {% endcomment %}
+        <div>
+            <div class="rounded-lg bg-gray-800 p-6 shadow-lg">
+                <h5 class="mb-2 text-xl font-medium leading-tight text-white">
+                    <a href="{{url.url_custom}}">{{request.get_host}}/{{url.url_custom}}</a>
+                </h5>
+                <p class="mb-4 text-base text-white">
+                    nb click : {{ url.click }}
+                </p>
+                <p class="mb-4 text-base text-white">
+                    <a href="{{url.url_long}}">{{url.url_long|truncatechars:90}}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% block script %}
+<script type="text/javascript">
+    function toggleModal(modalID){
+      document.getElementById(modalID).classList.toggle("hidden");
+      document.getElementById(modalID + "-backdrop").classList.toggle("hidden");
+      document.getElementById(modalID).classList.toggle("flex");
+      document.getElementById(modalID + "-backdrop").classList.toggle("flex");
+    }
+</script>
+{% endblock%}

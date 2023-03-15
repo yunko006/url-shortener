@@ -1,0 +1,4 @@
+<form class='form' id='form-modal-edit' action="{% url 'shorturl:edit_name' url.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+</form>

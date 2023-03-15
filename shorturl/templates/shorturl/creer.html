@@ -1,0 +1,5 @@
+<form class="mt-5" action="{% url 'shorturl:choose_url' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="button is-rounded mt-2" name='submit'>Créer mon lien</button>
+</form>

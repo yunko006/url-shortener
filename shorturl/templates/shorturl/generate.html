@@ -1,0 +1,5 @@
+<form action="{% url 'shorturl:generate_url' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="flex items-center gap-x-3 py-2 px-2 text-sm text-white rounded-md hover:bg-gray-900" name='submit'>Générer un lien</button>
+</form>
