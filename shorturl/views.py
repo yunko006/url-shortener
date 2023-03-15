@@ -120,12 +120,12 @@ def redirect_url(request, short):
         return redirect(long.url_long)
 
 
-def saved_url(request):
-    url_created = URL.objects.all()
+# def saved_url(request):
+#     url_created = URL.objects.all()
 
-    context = {"url_created": url_created}
+#     context = {"url_created": url_created}
 
-    return render(request, 'shorturl/all_url.html', context)
+#     return render(request, 'shorturl/all_url.html', context)
 
 
 def delete_url(request, url_id):
@@ -138,7 +138,7 @@ def delete_url(request, url_id):
     # context = {
     #     "url": url
     # }
-    print("j'ai cliqué")
+
     return HttpResponse("OK")
 
 
