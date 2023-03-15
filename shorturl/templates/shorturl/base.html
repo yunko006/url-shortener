@@ -1,71 +1,20 @@
+{% load tailwind_tags %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        {% block title %} {% endblock %}
-    </title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  </head>
-  <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-          </a>
-      
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-      
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item" href="{% url 'shorturl:home' %}">
-              Home
-            </a>
-      
-            <a class="navbar-item" href="{% url 'shorturl:generate_url' %}">
-              Générer un lien
-            </a>
-
-            <a class="navbar-item" href="{% url 'shorturl:choose_url' %}">
-                Créer mon lien
-              </a>
-      
-        </div>
-      
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-light" href="{% url 'shorturl:saved_url' %}">
-                  Voir mes liens
-                </a>
-                <a class="button is-link">
-                  <strong>Sign up</strong>
-                </a>
-                <a class="button is-light">
-                  Log in
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      {% block content%}
-
-      {% endblock content%}
-
-      <footer class="footer has-background-dark has-text-light mt-5">
-        <div class="content has-text-centered">
-          <p class='has-text-white'>
-            NOM by <a class="has-text-white" href="https://github.com/yunko006"><strong>yunko006</strong></a>. The source code is licensed by MIT.
-          </p>
-        </div>
-      </footer>
-  </body>
-
-</html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reduc</title>
+    {% tailwind_css %}
+    {% comment %} htmx package {% endcomment %}
+    <script src="https://unpkg.com/htmx.org@1.8.6" integrity="sha384-Bj8qm/6B+71E6FQSySofJOUjA/gq330vEqjFx9LakWybUySyI1IQHwPtbTU7bNwx" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-700 overflow-y-scroll">
+    {% include 'shorturl/_header.html' %}
+    {% block sidebar%} {% endblock sidebar %}
+    {% block content  %}{% endblock content %}
+    {% block footer %}{%endblock footer %}
+    
+    {% block script %} 
+    {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script> {% endcomment %}
+    {% endblock script %}
+</body>
