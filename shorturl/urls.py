@@ -16,9 +16,8 @@ urlpatterns = [
     path('delete/<int:url_id>', views.delete_url, name='delete_url'),
     # redirect vers le "vrai" lien
     path('<str:short>/', views.redirect_url, name='redirect_url'),
-
-    path('get_url/<int:url_id>', views.get_one_url, name='get_one_url')
-    
-
-    
+    # get one url
+    path('get_url/<int:url_id>', views.get_one_url, name='get_one_url'),
+    # edit name 
+    path('edit/<int:url_id>', views.edit_name, name="edit_name")
 ]

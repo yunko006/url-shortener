@@ -12,7 +12,7 @@ class ChooseURLNameForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={
                 "placeholder": "Entrez un url...",
-                "class": "input is-normal is-rounded",
+                "class": "input rounded-full gap-3",
             }
         ),
         label="",
@@ -22,7 +22,7 @@ class ChooseURLNameForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={
                 "placeholder": "Entrez un nom...",
-                "class": "input is-normal is-rounded mt-2",
+                "class": "input rounded-full",
             }
         ),
         label="",
@@ -44,6 +44,7 @@ class ChooseURLNameForm(forms.ModelForm):
 
         return url_custom
 
+
 class HashURLNameForm(forms.ModelForm):
 
     url_long = forms.CharField(
@@ -51,7 +52,7 @@ class HashURLNameForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={
                 "placeholder": "Entrez un url...",
-                "class": "input is-medium is-rounded",
+                "class": "input rounded-full",
             }
         ),
         label="",
@@ -60,3 +61,21 @@ class HashURLNameForm(forms.ModelForm):
     class Meta:
         model = URL
         fields = ['url_long']
+
+
+class EditNameForm(forms.ModelForm):
+    
+    name = forms.CharField(
+        required=True,
+        widget=forms.widgets.TextInput(
+            attrs={
+                "placeholder": "Nom (optionnel)",
+                "class": "input rounded-full",
+            }
+        ),
+        label="",
+    )
+
+    class Meta:
+        model = URL
+        fields = ['name']
