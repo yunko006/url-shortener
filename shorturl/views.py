@@ -22,7 +22,7 @@ def home(request):
 
     context = {"url_created": url_created}
 
-    return render(request, 'shorturl/ui.html', context)
+    return render(request, 'shorturl/home.html', context)
     # return redirect('shorturl:generate_url')
 
 
@@ -64,7 +64,7 @@ def choose_url(request):
 
 
     context= {"form": form}
-    return render(request, 'shorturl/choose_url_name.html', context)
+    return render(request, 'shorturl/creer.html', context)
 
 
 def generate_url(request):
@@ -98,7 +98,7 @@ def generate_url(request):
             
  
     context= {"form": form}
-    return render(request, 'shorturl/generate_url.html', context)
+    return render(request, 'shorturl/generate.html', context)
 
 
 def get_one_url(request, url_id):
@@ -113,7 +113,10 @@ def get_one_url(request, url_id):
 def redirect_url(request, short):
     # check si short_url est dans la base de donnée si oui alors on redirect vers son url long else 404
     if get_object_or_404(URL, url_custom=short):
+        # a chaque redirect click +=1 
         long = URL.objects.get(url_custom=short)
+        long.click += 1
+        long.save()
         return redirect(long.url_long)
 
 
@@ -130,10 +133,30 @@ def delete_url(request, url_id):
 
     if request.method == 'POST':
         url.delete()
-        return redirect('shorturl:saved_url')
+        return redirect('shorturl:home')
 
     # context = {
     #     "url": url
     # }
-
+    print("j'ai cliqué")
     return HttpResponse("OK")
+
+
+def edit_name(request, url_id):
+    url = get_object_or_404(URL, id=url_id)
+    name = url.name
+
+    if request.method != "POST":
+        form = EditNameForm(instance=url)
+    else:
+        form = EditNameForm(instance=url, data=request.POST)
+        if form.is_valid():
+            edit_name = form.save(commit=False)
+            edit_name.save()
+            return redirect('shorturl:home')
+        else:
+            print("pas valide")
+            print(name)
+    context = {'url': url, 'name': name, 'form': form}
+
+    return render(request, 'shorturl/edit.html', context)
